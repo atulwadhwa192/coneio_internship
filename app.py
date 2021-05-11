@@ -60,8 +60,19 @@ def new():
         # df.to_excel(out_loc+'final.xlsx', index= False)
         # df1.to_excel(out_loc+'Quantity.xlsx', index=False)
         return render_template("table.html",df = df ) 
-    else:
         return render_template("new.html")
+@app.route('/lables_search',methods = ['GET'])
+def sort_values():
+    data_key=request.args.get('data_key')
+    if(len(data_key)!=0):     
+        df[df['hsn'].str.match(f'(^{data_key}.*)')==True]
+        # df[df['HSN_Code'].str.match(f'(^{data_key}.*)')==True]
+
+        return render_template('table.html',df=df)
+    else:
+        return render_template('table.html',df=df)
+    
+
 
 @app.route('/labels',methods = ['POST', 'GET'])
 def table():
@@ -104,4 +115,4 @@ def return_files_tut(filename):
 
 if __name__ == '__main__':
    
-   app.run(debug = False)      
+   app.run(debug = True)      
